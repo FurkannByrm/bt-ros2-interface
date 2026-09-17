@@ -1,0 +1,21 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="SensingCellTree">
+        <Sequence name="sensing_cell_sequence">
+            <!-- <WaitForSignal name="wait_operator" -->
+            <!--                signal="{is_operator_ready}" -->
+            <!--                expected_value="true" -->
+            <!--                timeout="60.0"/> -->
+                <CheckState   topic="{/sr/xbotcore/joint_states}"/>
+
+                <CheckState   topic="{/cr/xbotcore/joint_states}"/>
+            <WaitForSignal name="wait_car_body"
+                           topic="{/is_car_body_located}"
+                           expected_value="true"
+                           timeout="30.0"/>
+
+
+           
+
+        </Sequence>
+    </BehaviorTree>
+</root>
