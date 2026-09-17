@@ -74,45 +74,55 @@ class SubNode : public rclcpp::Node{
 };
 
 template<>
-class SubNode<xbot_msgs::msg::JointState> : public rclcpp::Node{
-
-    public:
-        SubNode(const std::string& node_name, rclcpp::QoS qos, const std::string& topic_name, BT::Blackboard::Ptr blackboard, const std::vector<double>& home_vec) : Node{node_name}, blackboard_{blackboard}{
-        blackboard_->set(topic_name,false);
-        homing_control_sub_ = this->create_subscription<xbot_msgs::msg::JointState>(topic_name,qos,[this, home_vec, topic_name](const xbot_msgs::msg::JointState::ConstSharedPtr& msg){
-        auto is_home = true;
-    for(size_t i = 0; i<home_vec.size(); i++)
-    {   
-            auto target = home_vec[i];       
-            auto current = msg->link_position[i];
-            
-            if(std::fabs(target - current) > 0.01 ){
-                is_home = false;
-                break;
-            }
-    }
- 
-      if (is_home){
-        blackboard_->set(topic_name,true); 
-        RCLCPP_INFO(this->get_logger(), "%s - ROBOT HOME POSITION", topic_name.c_str());
-    }else
+class SubNode<xbot_msgs::msg::JointState> : public rclcpp::Node {
+public:
+    SubNode(const std::string& node_name, 
+            rclcpp::QoS qos, 
+            const std::string& topic_name, 
+            BT::Blackboard::Ptr blackboard, 
+            const std::vector<double>& home_vec) 
+        : Node{node_name}, 
+          blackboard_{blackboard},
+          first_msg_future_{first_msg_promise_.get_future()} 
     {
-        blackboard_->set(topic_name,false);
-        RCLCPP_INFO(get_logger(), "%s - Robot NOT home", topic_name.c_str());
+        homing_control_sub_ = this->create_subscription<xbot_msgs::msg::JointState>(
+            topic_name, qos, 
+            [this, home_vec, topic_name](const xbot_msgs::msg::JointState::ConstSharedPtr& msg) {
+                
+                bool is_home = true;
+                for (size_t i = 0; i < home_vec.size() && i < msg->link_position.size(); ++i) {
+                    if (std::fabs(home_vec[i] - msg->link_position[i]) > 0.01) {
+                        is_home = false;
+                        break;
+                    }
+                }
+
+                blackboard_->set(topic_name, is_home);
+
+                if (is_home) {
+                    RCLCPP_INFO(this->get_logger(), "%s - ROBOT HOME POSITION", topic_name.c_str());
+                } else {
+                    RCLCPP_INFO(this->get_logger(), "%s - Robot NOT home", topic_name.c_str());
+                }
+
+                if (!signaled_.exchange(true)) {
+                    first_msg_promise_.set_value();
+                }
+            });
     }
 
-    
-    });
+    bool waitForFirstMessage(std::chrono::seconds timeout = std::chrono::seconds(5))
+    {
+        return first_msg_future_.wait_for(timeout) == std::future_status::ready;
+    }
 
-        }
-
-
-
-    private:
-    
+private:
     rclcpp::Subscription<xbot_msgs::msg::JointState>::SharedPtr homing_control_sub_;
     BT::Blackboard::Ptr blackboard_;
 
+    std::promise<void> first_msg_promise_;
+    std::future<void> first_msg_future_;
+    std::atomic<bool> signaled_{false};
 };
 
 
