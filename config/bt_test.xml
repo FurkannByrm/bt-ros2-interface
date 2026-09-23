@@ -1,17 +1,38 @@
 <root BTCPP_format="4">
     <BehaviorTree ID="SensingCellTree">
         <Sequence name="sensing_cell_sequence">
-        
 
 
-        <CheckState   topic="{/sr/xbotcore/joint_states}"/>
-
-        <CheckState   topic="{/cr/xbotcore/joint_states}"/>
-           
+            <clientReq topic="/set_test_bool"
+                       request_payload="true"
+                       timeout="3.0"/>
             <WaitForSignal name="wait_car_body"
-                           topic="{/is_car_body_located}"
-                           expected_value="true"
-                           timeout="5.0"/>
+                topic="{/is_car_body_located}"
+                expected_value="true"
+                timeout="30.0"/>
+            <clientReq topic="/set_test_bool"
+                       request_payload="false"
+                       timeout="5.0"/>
+
+               
+            <clientReq topic="/set_test_bool"
+                       request_payload="true"
+                       timeout="5.0"/>
+            
+            <clientReq topic="/set_test_bool"
+                       request_payload="false"
+                       timeout="5.0"/>
+
+            <clientReq topic="/set_test_bool"
+                       request_payload="true"
+                       timeout="5.0"/>
+            <clientReq topic="/set_test_bool"
+                       request_payload="false"
+                       timeout="5.0"/>
+        <!-- <CheckState   topic="{/sr/xbotcore/joint_states}"/> -->
+        <!---->
+        <!-- <CheckState   topic="{/cr/xbotcore/joint_states}"/> -->
+        <!--     -->
 
 
         </Sequence>

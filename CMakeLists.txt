@@ -15,9 +15,12 @@ find_package(behaviortree_cpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(xbot_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
 
 add_executable(demo
-  src/bt_sub_node.cpp
+  # src/bt_sub_node.cpp
+  src/bt_service_dinamic_node.cpp
+  src/bt_sub_dinamic_node.cpp
   src/main.cpp
 )
 
@@ -33,6 +36,7 @@ ament_target_dependencies(demo
   std_msgs
   xbot_msgs
   sensor_msgs
+  std_srvs
   behaviortree_cpp
 )
 

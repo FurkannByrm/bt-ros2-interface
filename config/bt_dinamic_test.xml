@@ -1,0 +1,24 @@
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTask">
+        <Sequence>
+            <WaitForSignal topic="/is_car_body_located" 
+                           expected_value="true" 
+                           timeout="30.0"/>
+
+
+            <ClientReq topic="/set_test_bool"
+                       request_payload="true"
+                       timeout="5.0"/>
+
+            <WaitForSignal topic="/is_car_body" 
+                           expected_value="true" 
+                           timeout="30.0"/>
+            
+
+            <ClientReq topic="/set_test_bool"
+                       request_payload="false"
+                       timeout="5.0"/>
+
+        </Sequence>
+    </BehaviorTree>
+</root>

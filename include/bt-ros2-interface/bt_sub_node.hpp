@@ -1,17 +1,9 @@
 #ifndef BT_SUB_NODE_HPP
 #define BT_SUB_NODE_HPP
 
-#include <behaviortree_cpp/action_node.h>
-#include <behaviortree_cpp/basic_types.h>
-#include <behaviortree_cpp/blackboard.h>
-#include <behaviortree_cpp/condition_node.h>
-#include <behaviortree_cpp/tree_node.h>
-#include <rclcpp/qos.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <behaviortree_cpp/bt_factory.h>
 #include <std_msgs/msg/bool.hpp>
-#include <string>
-#include <xbot_msgs/msg/detail/joint_state__struct.hpp>
 #include <xbot_msgs/msg/joint_state.hpp>
 
 class WaitForSignal : public  BT::StatefulActionNode{
@@ -124,30 +116,6 @@ private:
     std::future<void> first_msg_future_;
     std::atomic<bool> signaled_{false};
 };
-
-
-
-
-class CarLocatedNode : public rclcpp::Node{
-    
-    public:
-    
-        CarLocatedNode(const std::string& node_name,BT::Blackboard::Ptr blackboard);
-
-    private:
-
-        rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr carbody_located_sub_;
-        
-
-        BT::Blackboard::Ptr blackboard_;
-};
-
-
-
-
-
-
-
 
 
 
