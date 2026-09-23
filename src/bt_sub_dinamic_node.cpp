@@ -17,7 +17,7 @@ void SubNodeBridge::subscribeIfNeeded(const std::string& topic){
            
         if(map_check){
          RCLCPP_INFO(node_->get_logger(), "Subscriber is not founded, it is being creating...");
-          sub = node_->create_subscription<std_msgs::msg::Bool>(topic,rclcpp::QoS(20),[this,topic, &sub](const std_msgs::msg::Bool::ConstSharedPtr& msg ){                                                
+          sub = node_->create_subscription<std_msgs::msg::Bool>(topic,rclcpp::QoS(20).best_effort(),[this,topic](const std_msgs::msg::Bool::ConstSharedPtr& msg ){                                                
           std::lock_guard<std::mutex> lock(mtx_);
           subs_map_[topic].second = msg->data;
           });

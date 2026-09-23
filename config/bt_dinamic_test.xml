@@ -1,24 +1,64 @@
 <root BTCPP_format="4">
     <BehaviorTree ID="MainTask">
         <Sequence>
-            <WaitForSignal topic="/is_car_body_located" 
+            <WaitForSignal topic="/ros2_comm/sensing/carbody_located_status" 
                            expected_value="true" 
                            timeout="30.0"/>
 
 
-            <ClientReq topic="/set_test_bool"
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos1"
+                       request_payload="true"
+                       timeout="5.0"/>
+        
+            <WaitForSignal topic="/is_operation1_finished" 
+                           expected_value="true" 
+                           timeout="30.0"/>
+    
+
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos2"
                        request_payload="true"
                        timeout="5.0"/>
 
-            <WaitForSignal topic="/is_car_body" 
+
+            <ClientReq topic="/ros2_comm/sensing/t_go_slider_pos2"
+                       request_payload="true"
+                       timeout="5.0"/>
+            
+             <WaitForSignal topic="/is_operation2_finished" 
                            expected_value="true" 
                            timeout="30.0"/>
-            
+    
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos3"
+                       request_payload="true"
+                       timeout="5.0"/>
+                        
+             <WaitForSignal topic="/is_operation3_finished" 
+                           expected_value="true" 
+                           timeout="30.0"/>
 
-            <ClientReq topic="/set_test_bool"
-                       request_payload="false"
+
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos4"
+                       request_payload="true"
                        timeout="5.0"/>
 
-        </Sequence>
+
+             <WaitForSignal topic="/is_operation4_finished" 
+                           expected_value="true" 
+                           timeout="30.0"/>
+ 
+
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos5"
+                       request_payload="true"
+                       timeout="5.0"/>
+
+           <WaitForSignal topic="/is_operation5_finished" 
+                           expected_value="true" 
+                           timeout="30.0"/>
+
+            <ClientReq topic="/ros2_comm/sensing/go_slider_pos6"
+                       request_payload="true"
+                       timeout="5.0"/>
+
+         </Sequence>
     </BehaviorTree>
 </root>
