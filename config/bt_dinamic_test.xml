@@ -3,7 +3,7 @@
         <Sequence>
             <WaitForSignal topic="/ros2_comm/sensing/carbody_located_status" 
                            expected_value="true" 
-                           timeout="30.0"/>
+                           timeout="200.0"/>
 
 
             <ClientReq topic="/ros2_comm/sensing/go_slider_pos1"
@@ -45,15 +45,11 @@
              <WaitForSignal topic="/is_operation4_finished" 
                            expected_value="true" 
                            timeout="30.0"/>
- 
+
 
             <ClientReq topic="/ros2_comm/sensing/go_slider_pos5"
                        request_payload="true"
                        timeout="5.0"/>
-
-           <WaitForSignal topic="/is_operation5_finished" 
-                           expected_value="true" 
-                           timeout="30.0"/>
 
             <ClientReq topic="/ros2_comm/sensing/go_slider_pos6"
                        request_payload="true"

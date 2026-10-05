@@ -5,7 +5,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# C++ Standardı
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -18,19 +17,62 @@ find_package(xbot_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
 add_executable(demo
-  # src/bt_sub_node.cpp
   src/bt_service_dinamic_node.cpp
   src/bt_sub_dinamic_node.cpp
   src/main.cpp
 )
 
-# Header yollarını hedefe bağlayın
+add_executable(sensing_test
+    src/bt_service_dinamic_node.cpp
+    src/bt_sub_dinamic_node.cpp
+    tests/single_sensing_test.cpp
+    )
+
+
+add_executable(cleaning_test
+    src/bt_service_dinamic_node.cpp
+    src/bt_sub_dinamic_node.cpp
+    tests/single_cleaning_test.cpp
+    )
+
+
+add_executable(magician_test
+    src/bt_service_dinamic_node.cpp
+    src/bt_sub_dinamic_node.cpp
+    tests/magician_test.cpp
+    )
+
+    
+set(TEST_TARGETS
+        sensing_test
+        cleaning_test
+        magician_test
+    )
+
+
+foreach(target ${TEST_TARGETS})
+  target_include_directories(${target} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+
+  ament_target_dependencies(${target}
+    rclcpp
+    std_msgs
+    xbot_msgs
+    sensor_msgs
+    std_srvs
+    behaviortree_cpp
+  )
+endforeach()
+
+
+
 target_include_directories(demo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
-# rclcpp ve behaviortree include/library yollarını demo hedefine aktarın
 ament_target_dependencies(demo
   rclcpp
   std_msgs
@@ -40,7 +82,9 @@ ament_target_dependencies(demo
   behaviortree_cpp
 )
 
-install(TARGETS demo
+install(TARGETS
+  demo
+  ${TEST_TARGETS}
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -49,7 +93,10 @@ install(DIRECTORY include/
 
 )
 install(DIRECTORY config/
-DESTINATION share/${PROJECT_NAME}/config
+  DESTINATION share/${PROJECT_NAME}/config
 )
 
+install(DIRECTORY tests/config/
+  DESTINATION share/${PROJECT_NAME}/tests_config
+)
 ament_package()

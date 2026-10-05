@@ -1,3 +1,4 @@
+
 #include <bt-ros2-interface/bt_sub_dinamic_node.hpp>
 #include <bt-ros2-interface/bt_service_dinamic_node.hpp>
 #include <ament_index_cpp/get_package_share_directory.hpp>
@@ -50,8 +51,4 @@ sub_thread.join();
 
     return 0;
 }
-
-
-
-
 

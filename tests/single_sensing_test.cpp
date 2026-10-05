@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
     rclcpp::init(argc, argv);
     
     auto tmp_node = std::make_shared<rclcpp::Node>("bt_xml_loader");
-    tmp_node->declare_parameter<std::string>("config","bt_dinamic_test.xml");
+    tmp_node->declare_parameter<std::string>("config","single_sensing.xml");
     std::string config_name;
     tmp_node->get_parameter("config",config_name);
     tmp_node.reset();
@@ -50,8 +50,4 @@ sub_thread.join();
 
     return 0;
 }
-
-
-
-
 
