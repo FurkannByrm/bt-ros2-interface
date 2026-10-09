@@ -1,0 +1,49 @@
+
+<root BTCPP_format="4">
+  <BehaviorTree ID="MainTask">
+    <Sequence>
+  
+      <ClientReq topic="/ros2_comm/sensing/position3_bypass_set" request_payload="true" timeout="10.0"/> 
+        <!-- Sensing: Start & Position Requests -->
+      <WaitForSignal topic="/ros2_comm/sensing/carbody_located_status" expected_value="true" timeout="200.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos1" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos2" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/t_go_slider_pos2" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos3" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos4" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos5" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos6" request_payload="true" timeout="10.0"/>
+
+      <!-- Cleaning: Initial Sequence (True) -->
+      <WaitForSignal topic="/ros2_comm/cleaning/carbody_located_status" expected_value="true" timeout="200.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos1" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos2" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos3" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos4" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos5" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos6" request_payload="true" timeout="10.0"/>
+
+      <!-- Cleaning: Repeat Sequence (True) -->
+      <WaitForSignal topic="/ros2_comm/cleaning/carbody_located_status" expected_value="false" timeout="200.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos1" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos2" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos3" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos4" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos5" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/go_slider_pos6" request_payload="false" timeout="10.0"/>
+
+      <!-- Sensing: Reset Sequence (False) -->
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos1" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos2" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/t_go_slider_pos2" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos3" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos4" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos5" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/go_slider_pos6" request_payload="false" timeout="10.0"/>
+    
+      <ClientReq topic="/ros2_comm/sensing/position3_bypass_set" request_payload="false" timeout="10.0"/> 
+
+
+    </Sequence>
+  </BehaviorTree>
+</root>

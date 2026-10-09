@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
     rclcpp::init(argc, argv);
     
     auto tmp_node = std::make_shared<rclcpp::Node>("bt_xml_loader");
-    tmp_node->declare_parameter<std::string>("config","magician_demonstrator_without_robot.xml");
+    tmp_node->declare_parameter<std::string>("config","bypass_without_cobot.xml");
     std::string config_name;
     tmp_node->get_parameter("config",config_name);
     tmp_node.reset();
