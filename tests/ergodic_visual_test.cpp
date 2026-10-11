@@ -1,4 +1,3 @@
-
 #include <bt-ros2-interface/bt_sub_dinamic_node.hpp>
 #include <bt-ros2-interface/bt_service_dinamic_node.hpp>
 #include <ament_index_cpp/get_package_share_directory.hpp>
@@ -10,7 +9,7 @@ int main(int argc, char* argv[]){
     rclcpp::init(argc, argv);
     
     auto tmp_node = std::make_shared<rclcpp::Node>("bt_xml_loader");
-    tmp_node->declare_parameter<std::string>("config","bt_dinamic_test.xml");
+    tmp_node->declare_parameter<std::string>("config","ergodic_visual_test3a.xml");
     std::string config_name;
     tmp_node->get_parameter("config",config_name);
     tmp_node.reset();

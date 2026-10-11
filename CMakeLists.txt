@@ -22,17 +22,17 @@ src/bt_sub_dinamic_node.cpp
 src/main.cpp
 )
 
-add_executable(sensing_test
+add_executable(ergodic_vision_test3a
 src/bt_service_dinamic_node.cpp
 src/bt_sub_dinamic_node.cpp
-tests/single_sensing_test.cpp
+tests/ergodic_visual_test.cpp
 )
 
 
-add_executable(cleaning_test
+add_executable(defect_removal_test4
 src/bt_service_dinamic_node.cpp
 src/bt_sub_dinamic_node.cpp
-tests/single_cleaning_test.cpp
+tests/defect_removal_test.cpp
 )
 
 
@@ -44,8 +44,8 @@ tests/magician_test.cpp
 
 
 set(TEST_TARGETS
-sensing_test
-cleaning_test
+ergodic_vision_test3a
+defect_removal_test4
 magician_test
 )
 
