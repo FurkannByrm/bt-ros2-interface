@@ -1,0 +1,64 @@
+<root BTCPP_format="4">
+  <BehaviorTree ID="MainTask">
+    <Sequence>
+      <WaitForSignal topic="/ros2_comm/sensing/carbody_located_status" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/initial_pos_ok" request_payload="true" timeout="10.0"/>
+  
+        <!-- Sensing: Start & Step 1 -->
+      <WaitForSignal topic="/ros2_comm/sensing/is_operation1_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos1_ok" request_payload="true" timeout="10.0"/>
+
+      <!-- Sensing: Step 2 -->
+      <WaitForSignal topic="/ros2_comm/sensing/is_operation2_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos2_ok" request_payload="true" timeout="10.0"/>
+
+      <!-- Sensing: Step 3 -->
+      <WaitForSignal topic="/ros2_comm/sensing/is_operation3_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos3_ok" request_payload="true" timeout="10.0"/>
+
+      <!-- Sensing: Step 4 -->
+      <WaitForSignal topic="/ros2_comm/sensing/is_operation4_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos4_ok" request_payload="true" timeout="10.0"/>
+
+      <!-- Sensing: Step 5 -->
+      <WaitForSignal topic="/ros2_comm/sensing/is_operation5_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos5_ok" request_payload="true" timeout="10.0" />
+
+      <!-- Cleaning: Trigger & Set True -->
+      <WaitForSignal topic="/ros2_comm/cleaning/carbody_located_status" expected_value="true" timeout="800.0"/>
+      
+      <WaitForSignal topic="/ros2_comm/is_cleaning_active" expected_value="true" timeout="2000.0"/>
+
+      <ClientReq topic="/ros2_comm/cleaning/initial_pos_ok" request_payload="true" timeout="10.0"/>
+      
+      <WaitForSignal topic="/ros2_comm/cleaning/is_operation1_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos1_ok" request_payload="true" timeout="10.0"/>
+
+      <WaitForSignal topic="/ros2_comm/cleaning/is_operation2_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos2_ok" request_payload="true" timeout="10.0"/>
+
+      <WaitForSignal topic="/ros2_comm/cleaning/is_operation3_finished" expected_value="true" timeout="800.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos3_ok" request_payload="true" timeout="10.0"/>
+
+
+      <ClientReq topic="/ros2_comm/cleaning/pos4_ok" request_payload="true" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos5_ok" request_payload="true" timeout="10.0"/>
+
+      <!-- Cleaning: Reset (Set False) -->
+      <WaitForSignal topic="/ros2_comm/cleaning/carbody_located_status" expected_value="false" timeout="800.0"/> 
+      <ClientReq topic="/ros2_comm/cleaning/initial_pos_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos1_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos2_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos3_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos4_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/cleaning/pos5_ok" request_payload="false" timeout="10.0"/>
+      <!-- Sensing: Reset (Set False) -->
+      <ClientReq topic="/ros2_comm/sensing/initial_pos_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos1_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos2_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos3_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos4_ok" request_payload="false" timeout="10.0"/>
+      <ClientReq topic="/ros2_comm/sensing/pos5_ok" request_payload="false" timeout="10.0"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

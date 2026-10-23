@@ -14,9 +14,11 @@ bool ClientReqBridge::sendRequest(const std::string& service_name,
         std::lock_guard<std::mutex> lock(mutex_);  
         auto it = client_map_.find(service_name);
         if(it == client_map_.end()){
-           RCLCPP_INFO(node_->get_logger(), "client is not founded, it is being creating...");
-           client = node_->create_client<std_srvs::srv::SetBool>(service_name);
-           client_map_[service_name] = client;
+        RCLCPP_INFO(node_->get_logger(),
+            "Service [ %s ] is being created..",
+            service_name.c_str());           
+        client = node_->create_client<std_srvs::srv::SetBool>(service_name);
+        client_map_[service_name] = client;
         }
         else{
             client = it->second;
